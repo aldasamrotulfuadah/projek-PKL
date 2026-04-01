@@ -1,0 +1,114 @@
+@extends('layouts/app')
+
+@section('content')
+
+    <h1 class="h3 mb-4 text-gray-800">
+        <i class="fas fa-tasks mr-2"></i>
+       {{ $title }} 
+    </h1>
+
+
+    <div class="card">
+        <div class="card-header d-flex flex-wrap justify-content-center justify-content-xl-between">
+            <div class="mb-1 mr-2">
+                <a href="{{ route('suratmasukCreate') }}" class="btn btn-sm btn-secondary">
+                    <i class="fas fa-plus mr-2"></i>
+                Tambah Data
+                </a>
+            </div>
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                                    <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                                        <thead class="bg-danger text-white"  style="width:120px">
+                                            <tr class="text-center">
+                                                <th>No</th>
+                                                <th>Tanggal Surat</th>
+                                                <th>Nomor Surat</th>
+                                                <th>Diterima Dari</th>
+                                                <th>Perihal</th>
+                                                <th>Sifat</th>
+                                                <th>Dengan Hormat Harap</th>
+                                                <th>Diteruskan Kepada</th>
+                                                <th>
+                                                    <i class="fas fa-cog"></i>
+                                                </th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @foreach ($suratmasuk as $item)
+                                            <tr class="text-center">
+                                                <td>{{ $loop->iteration }}</td>
+                                                <td>{{ $item->tanggal_surat }}</td>
+                                                <td>
+                                                    <span class="badge badge-secondary">
+                                                        {{ $item->nomor_surat }}
+                                                    </span>
+                                                </td>
+                                                <td>{{ $item->diterima_dari }}</td>
+                                                <td>{{ $item->perihal }}</td>
+                                                <td>
+                                                    @if ($item->sifat == 'Sangat Segera')
+                                                    <span class="badge badge-dark">
+                                                        {{ $item->sifat }}
+                                                    </span>
+                                                    @else
+                                                    <span class="badge badge-secondary">
+                                                        {{ $item->sifat }}
+                                                    </span>
+                                                    @endif
+                                                </td>
+                                                <td>{{ $item->diteruskan_kepada }}</td>
+                                                <td>{{ $item->dengan_hormat_harap }}</td>
+                                                <td class="text-truncate" style="max-width: 150px;">
+                                                    <div class="d-flex justify-content-center align-items-center">
+                                                        <a href="{{ route('suratmasukEdit', $item->id) }}" class="btn btn-sm btn-secondary mr-1">
+                                                            <i class="fas fa-edit"></i>
+                                                        </a>
+                                                        <button class="btn btn-sm btn-danger mr-1" data-toggle="modal" data-target="#exampleModal{{ $item->id }}">
+                                                            <i class="fas fa-trash"></i>
+                                                        </button>
+                                                       <button class="btn btn-sm btn-success" data-toggle="modal" data-target="#waModal{{ $item->id }}">
+                                                            <i class="fab fa-whatsapp"></i>
+                                                        </button>
+                                                        <div class="modal fade" id="waModal{{ $item->id }}" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <form action="{{ route('kirimWaSurat', $item->id) }}" method="POST">
+      @csrf
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Kirim WA - {{ $item->nomor_surat }}</h5>
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+        </div>
+        <div class="modal-body">
+          <p>Pilih nomor WA tujuan:</p>
+          <select name="no_wa" class="form-control" required>
+            <option value="" selected disabled>-- Pilih Nomor --</option>
+            <option value="628111111111">Kepala (628111111111)</option>
+            <option value="628222222222">Admin (628222222222)</option>
+            <option value="628333333333">Sekretaris (628333333333)</option>
+            <!-- Tambah nomor lain di sini -->
+          </select>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
+          <button type="submit" class="btn btn-success">Kirim WA</button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+                                                    </div>
+                                                    @include('suratm/modal')
+                                                </td>
+                                            </tr>
+                                            @endforeach
+                                        </tbody>
+                                    </table>
+                                </div>
+        </div>
+    </div>
+    
+
+
+@endsection

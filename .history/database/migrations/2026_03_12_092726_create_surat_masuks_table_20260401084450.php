@@ -1,0 +1,34 @@
+<?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+return new class extends Migration
+{
+    /**
+     * Run the migrations.
+     */
+    public function up(): void
+    {
+        Schema::create('surat_masuks', function (Blueprint $table) {
+            $table->id();
+            $table->date('tanggal_surat');
+            $table->string('nomor_surat');
+            $table->string('diterima_dari');
+            $table->string('perihal');
+            $table->string('file_surat');
+            $table->enum('diteruskan_kepada',['Sekretaris','Kabid Ideologi Wawasan Kebangsaan, Ketahanan Eksosbud & Agama','Kabid Kewaspadaan Nasional & Penanganan Konflik', 'Kabid Politik Dalam Negeri & Ormas', 'Subid Ideologi Wasbang', ]);
+            $table->enum('dengan_hormat_harap',['Tanggapan dan Saran','Proses Lebih Lanjut', 'Koordinasi/Konsultasi', 'Bahan Pertimbangan']);
+             $table->string('no_hp')->nullable();
+            $table->timestamps();
+        });
+    }
+    /**
+     * Reverse the migrations.
+     */
+    public function down(): void
+    {
+        Schema::dropIfExists('surat_masuks');
+    }
+};
