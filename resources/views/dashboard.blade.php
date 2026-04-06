@@ -11,7 +11,9 @@
                         <div class="col mr-2">
                             <div class="text-xs font-weight-bold text-dark text-uppercase mb-1">
                             Total Surat Masuk</div>
-                            <div class="h5 mb-0 font-weight-bold text-gray-800">50</div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800">
+                                {{ $jumlahSuratMasuk }}
+                            </div>
                         </div>
                         <div class="col-auto">
                             <i class="fas fa-file fa-2x text-gray-300"></i>
@@ -27,7 +29,9 @@
                         <div class="col mr-2">
                             <div class="text-xs font-weight-bold text-dark text-uppercase mb-1">
                             Total Surat Keluar</div>
-                            <div class="h5 mb-0 font-weight-bold text-gray-800">50</div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800">
+                                {{ $jumlahSuratKeluar }}
+                            </div>
                         </div>
                         <div class="col-auto">
                             <i class="fas fa-file fa-2x text-gray-300"></i>
